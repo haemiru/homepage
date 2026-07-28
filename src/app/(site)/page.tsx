@@ -29,7 +29,7 @@ export default function Home() {
               </p>
 
               <h1
-                className="rise-in mt-8 font-display font-bold tracking-tightest text-[clamp(2.3rem,8.4vw,5.6rem)] leading-[1.14]"
+                className="rise-in mt-8 font-display font-extrabold tracking-tightest text-[clamp(2.3rem,8.4vw,5.6rem)] leading-[1.14]"
                 style={{ animationDelay: "0.15s" }}
               >
                 아이의 첫 마디를

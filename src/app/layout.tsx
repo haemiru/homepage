@@ -24,14 +24,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+      {/* 폰트(Pretendard)는 globals.css 에서 자체 호스팅으로 불러옵니다 */}
       <body className="antialiased">{children}</body>
     </html>
   );
