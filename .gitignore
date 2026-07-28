@@ -1,0 +1,28 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# production
+/build
+
+# env — 절대 커밋 금지
+.env
+.env.local
+.env*.local
+
+# vercel
+.vercel
+
+# 로컬 도구 상태 (Claude Code 플러그인 런타임)
+.bkit/
+.claude/
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*

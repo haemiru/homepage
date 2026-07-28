@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────
+   디자인 토큰 — 한지(韓紙) 편집 톤
+   따뜻한 종이 바탕 · 먹색 활자 · 감빛 강조
+   ─────────────────────────────────────────────── */
+@theme {
+  --color-paper: #faf6ef;
+  --color-paper-deep: #f3ece0;
+  --color-paper-edge: #ebe2d3;
+  --color-ink: #221e1a;
+  --color-ink-soft: #574f45;
+  --color-ink-faint: #948a7c;
+  --color-persimmon: #bd5729;
+  --color-persimmon-deep: #9a4520;
+  --color-persimmon-wash: #f6e8df;
+  --color-pine: #3d5245;
+  --color-line: #ded3c1;
+
+  --font-display: "Gowun Batang", "Nanum Myeongjo", serif;
+  --font-sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", sans-serif;
+
+  --tracking-tightest: -0.045em;
+
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ───────────── 기본 ───────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 350;
+    line-height: 1.85;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 한글은 단어 중간에서 끊기지 않게 */
+  p,
+  li,
+  h1,
+  h2,
+  h3,
+  h4 {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: var(--tracking-tightest);
+  }
+
+  ::selection {
+    background: var(--color-persimmon);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-persimmon);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* 종이 결 — 화면 전체에 아주 옅게 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ───────────── 유틸 ───────────── */
+
+/* 세로쓰기 라벨 */
+@utility label-vert {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.32em;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+/* 섹션 머리 번호 */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-persimmon);
+}
+
+/* 본문 밑줄 강조 — 붓으로 그은 느낌 */
+@utility mark-ink {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-persimmon) 22%, transparent) 0.34em,
+    transparent 0.34em
+  );
+}
+
+/* 얇은 괘선 */
+@utility rule-thin {
+  border-color: var(--color-line);
+}
+
+/* ───────────── 등장 애니메이션 ───────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@utility rise-in {
+  animation: rise 0.9s var(--ease-paper) both;
+}
+
+@utility rule-draw {
+  transform-origin: left;
+  animation: draw 1.1s var(--ease-paper) both;
+}
+
+/* 스크롤 진입 시 나타나는 요소 (JS 없이 CSS만) */
+@utility reveal {
+  animation: rise 0.85s var(--ease-paper) both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 26%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
